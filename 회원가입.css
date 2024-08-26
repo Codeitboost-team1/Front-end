@@ -43,7 +43,7 @@ body {
     color: #282828;
     font-size: 16px;
     font-weight: 500; 
-    margin-bottom: 10px; /* 라벨과 입력란 사이의 간격 추가 */
+    margin-bottom: 10px; 
     text-align: center;
 }
 

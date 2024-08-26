@@ -1,4 +1,4 @@
-// 아이디 중복 확인 처리(이부분은 백엔드의 역할)
+// 아이디 중복 확인 처리(이부분은 백엔드)
 document.querySelector('.check-btn').addEventListener('click', function() {
     const usernameInput = document.getElementById('아이디').value;
     const messageElement = document.createElement('p');

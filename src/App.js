@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 import './App.css';
 import SignUp from './SignUp'; 
+import MyFeed from './MyFeed';
 import Main from './Main';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     e.preventDefault();
     
     if (id === 'codeit' && password === '1234') {
-      navigate('/main'); //
+      navigate('/myfeed'); //
     } else {
       setError('잘못된 아이디 또는 비밀번호입니다.');
     }
@@ -56,7 +57,9 @@ function App() {
         }
       />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/main" element={<Main />} /> 
+      <Route path="/myfeed" element={<MyFeed />} /> 
+      <Route path="/main" element={<Main />} />
+      <Route path="/login" elemet={<App />} />
     </Routes>
   );
 }

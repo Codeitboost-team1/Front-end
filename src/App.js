@@ -46,7 +46,7 @@ function App() {
                   required
                 />
               </div>
-              {error && <p className="error-message">{error}</p>} {/* 오류 메시지 표시 */}
+              {error && <p className="error-message">{error}</p>} 
               <button type="submit">로그인</button>
               <div className="signup-link">
                 계정이 없으신가요?&ensp; <Link to="/signup" className="signup-link-text">회원가입하기</Link>
@@ -56,7 +56,7 @@ function App() {
         }
       />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/main" element={<Main />} /> {/* 메인 페이지 경로 추가 */}
+      <Route path="/main" element={<Main />} /> 
     </Routes>
   );
 }

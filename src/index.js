@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter as Router } from 'react-router-dom'; // BrowserRouter import
 import './index.css';
 import App from './App';
@@ -16,6 +17,4 @@ root.render(
     </Router>
   </React.StrictMode>
 );
-
-// 성능 측정 또는 기타 로그를 위한 설정
 reportWebVitals();

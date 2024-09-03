@@ -1,12 +1,28 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProfileEdit from './ProfileEdit'; // ProfileEdit 모달 컴포넌트 import
 import './MyFeed.css';
 
 function Feed() {
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // 모달 열기/닫기 상태
+  const [profile, setProfile] = useState({
+    name: '사용자 이름',
+    id: '@user_id',
+    feedName: '피드 이름',
+    description: '이곳에 줄글 소개가 들어갑니다.',
+    profilePic: '/profile.png'
+  });
+
   const handleSubscribeClick = () => {
     setIsSubscribed(!isSubscribed);
   };
+
+  const handleProfileUpdate = (updatedProfile) => {
+    setProfile(updatedProfile);
+    setIsEditing(false); // 모달 닫기
+  };
+
   return (
     <div className="feed-page">
       <nav className="navbar">
@@ -17,23 +33,23 @@ function Feed() {
 
       <section className="profile-section">
         <div className="profile-header">
-          <img src="/profile.png" alt="Profile" className="profilepic" />
+          <img src={profile.profilePic} alt="Profile" className="profilepic" />
           <div className="profile-info">
             <div className="name-id">
-              <p>사용자 이름</p>
-              <p className="profile-id">&ensp;|&ensp;@user_id</p>
+              <p>codeit</p>
+              <p className="profile-id">&ensp;|&ensp;@codeit</p>
             </div>
             <div className="profile-feed">
-              <p className="profile-feed-name">피드 이름</p>
+              <p className="profile-feed-name">{profile.feedName}</p>
               <p className="profile-stats">게시물 50 | 구독자 200</p>
             </div>
             <p className="profile-description">
-              이곳에 줄글 소개가 들어갑니다. 사용자에 대한 짧은 설명이나 소개 글을 여기에 추가합니다.
+              {profile.description}
             </p>
           </div>
           <div className="profile-actions">
             <div className="profile-edit">
-              <a href="#" className="edit-profile-link">프로필 수정</a>
+              <a href="#" className="edit-profile-link" onClick={() => setIsEditing(true)}>프로필 수정</a>
               <Link to="/"> <p className="logout-link">&ensp;로그아웃</p></Link>
             </div>
             <button 
@@ -45,6 +61,8 @@ function Feed() {
           </div>
         </div>
       </section>
+
+      {isEditing && <ProfileEdit profile={profile} onClose={() => setIsEditing(false)} onProfileUpdate={handleProfileUpdate} />}
     </div>
   );
 }

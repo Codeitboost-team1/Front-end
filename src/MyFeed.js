@@ -122,8 +122,8 @@ function Feed() {
           <img src={profile.profilePic} alt="Profile" className="profilepic" />
           <div className="profile-info">
             <div className="name-id">
-              <p>{profile.name}</p>
-              <p className="profile-id">&ensp;|&ensp;{profile.id}</p>
+              <p>codeit</p>
+              <p className="profile-id">&ensp;|&ensp;@codeit</p>
             </div>
             <div className="profile-feed">
               <p className="profile-feed-name">{profile.feedName}</p>

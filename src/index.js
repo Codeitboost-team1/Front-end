@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom'; // BrowserRouter import
 import './index.css';
-import App from './MemoryModalApp';
+import MemoryModalApp from './MemoryModalApp'; // 원래 사용하던 MemoryModalApp
 import reportWebVitals from './reportWebVitals';
 
+// React 18에서는 `createRoot` 메서드를 사용하여 ReactDOM을 생성합니다.
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// App 컴포넌트를 Router로 감싸서 라우팅 기능을 추가합니다.
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <MemoryModalApp />
+    </Router>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

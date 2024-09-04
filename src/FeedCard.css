@@ -1,0 +1,48 @@
+.feed-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .feed-thumbnail {
+    width: 100%;
+    height: 100%;
+    padding:10px;
+    object-fit: cover;
+  }
+  
+  .feed-info {
+    padding: 10px;
+  }
+  .feedcard-title {
+    width:fit-content;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-right:50px;
+  }
+  
+  .feed-tags {
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .feed-stats {
+    margin-top:20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .feed-location-date {
+    color: #666;
+  }
+  .feed-likes,
+  .feed-comments {
+    color: #333;
+    font-size:12px;
+  }
+  

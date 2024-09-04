@@ -1,0 +1,309 @@
+a {
+    text-decoration: none;
+  }
+
+.feed-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .navbar-logo {
+    height: 40px;
+  }
+  
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: flex-start;
+    width: 80%;
+    position: relative;
+    margin-top:10px;
+  }
+  
+  .profilepic {
+    width: 150px;
+    height: 150px;
+    border-radius: 6px;
+  }
+  
+  .profile-info {
+    flex-grow: 1;
+    margin-left:50px;
+  }
+  
+  .name-id {
+    display: flex;
+    align-items: baseline;
+    margin-top:10px;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .profile-id {
+    color: #666;
+    font-size: 16px;
+  }
+  
+  .profile-feed {
+    display: flex;
+    align-items: baseline;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-feed-name {
+    font-weight: bold;
+    font-size: 28px;
+    margin-right: 20px;
+  }
+  
+  .profile-stats {
+    color: #888;
+  }
+  
+  .profile-description {
+    color: #333;
+    margin-bottom: 20px;
+    width:70%;
+  }
+  
+  .profile-actions {
+    width:20%;
+    height:80%;
+    position: absolute;
+    top:10px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile-edit {
+    position:absolute;
+    display:flex;
+    flex-direction: row;
+    align-items: center
+  }
+  
+  .edit-profile-link,
+  .logout-link {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    display:flex;
+    align-items: center;
+  }
+  
+  .edit-profile-link:hover,
+  .logout-link:hover {
+    text-decoration: underline;
+  }
+  
+  .subscribe-btn {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 6px 12px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100px;
+    height:45px;
+    margin-top:50px;
+  }
+
+  .subscribe-btn.subscribed {
+    background-color: black;
+    color:white;
+  }
+  
+  .feed-controls {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .divider {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+    margin-top:50px;
+  }
+  
+  .feed-header {
+    margin-top:30px;
+    display: grid;
+    grid-template-columns: 10fr 1fr; /* 가운데 정렬을 위한 설정 */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .feed-title {
+    font-size:30px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .upload-memory-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 170px;
+    height: 60%;
+  }
+  
+  .filter-controls {
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+    height:50px;
+  }
+  
+  .privacy-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .privacy-btn {
+    background-color: white;
+    color: black;
+    border: 1px solid #333;
+    border-radius: 22px;
+    cursor: pointer;
+    width:70px;
+    font-size: 14px;
+    height:50px;
+    margin-top: 0;
+  }
+  .privacy-btn.selected {
+    background-color: black;
+    color: white;
+  }
+  
+  .search-input {
+    grid-area: search-input;
+    width: 70%;
+    height:50px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: mixed;
+
+  }
+  
+  .filter-select {
+    background-color: white;
+    color: black;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 20px;
+    border-radius: mixed;
+    cursor: pointer;
+    width:160px;
+  }
+
+  .feed-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .feed-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feed-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .feed-info {
+    padding: 10px;
+  }
+  
+  .feed-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .feed-id {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .feed-title {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .feed-tags {
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .feed-location-date {
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .feed-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .feed-likes,
+  .feed-comments {
+    margin: 0;
+  }
+
+  .more_btn{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 6px 12px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 80%;
+    height:50px;
+    margin-left:10%;
+    margin-bottom:50px;
+  }
+
+  .more_btn:hover {
+    background-color: black;
+    color:white;
+  }

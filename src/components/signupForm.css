@@ -19,9 +19,14 @@
     align-items: center;
   }
   
-  .logo img {
+  /* .logo img {
     margin-bottom: 20px;
+  } */
+  .logo img {
+    width: 170px; 
+    height: auto; 
   }
+
   
   .signup-form {
     width: 498px;
@@ -58,11 +63,17 @@
     margin-bottom: 5px;
   }
   
-  .input-with-button {
+  /* .input-with-button {
     display: flex;
     align-items: center;
-  }
-  
+  } */
+  .input-with-button {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
   .input-with-button input {
     width: 277px; 
     height: 50px;

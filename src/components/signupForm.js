@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './signupForm.css';
- 
+  
 function SignupForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

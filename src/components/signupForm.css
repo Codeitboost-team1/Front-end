@@ -1,4 +1,4 @@
-/* src/components/SignupForm.css */
+/* src/components/ignupForm.css */
 * {
     margin: 0;
     padding: 0;
@@ -20,9 +20,9 @@
   }
   
   
-  .logo img {
-      width: 170px;
-      margin-bottom: 70px;
+  .logo {
+    width: 170px;
+    margin-bottom: 40px;
   }
 
   
@@ -87,14 +87,12 @@
     border: 1px solid #282828;
     cursor: pointer;
     font-size: 14px;
-    /* font-weight: 500; */
-    margin-bottom: auto;
+    color: #000000;
+    margin: auto;
   }
   
   .submit-btn {
-    /* width: 100%;
-    padding: 22px; */
-    width: 504px;
+    /* width: 504px;
     height: 71px;
     background-color: #282828;
     color: white;
@@ -103,7 +101,18 @@
     cursor: pointer;
     font-size: 20px;
     font-weight: 500;
-    margin-top: 40px;
+    margin-top: 40px; */
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top:30px;
+    padding: 20px;
+    font-size: 16px;
+    width: 460px;
+    border-radius: 6px;
+    /* box-sizing: border-box; */
+    height: 71px;
   }
    
   .submit-btn:hover {

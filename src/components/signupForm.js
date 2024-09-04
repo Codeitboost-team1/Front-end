@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './signupForm.css';
+import { useNavigate } from 'react-router-dom';  // 추가: useNavigate 가져오기
   
 function SignupForm() {
   const [username, setUsername] = useState('');
@@ -10,8 +11,9 @@ function SignupForm() {
   const [usernameMessage, setUsernameMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [formSuccessMessage, setFormSuccessMessage] = useState('');
- 
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
+
+  const navigate = useNavigate();  // 추가: useNavigate 훅 사용
 
   // 아이디 중복 확인 버튼을 눌렀을 때 메시지 업데이트
   const handleUsernameCheck = () => {
@@ -24,13 +26,6 @@ function SignupForm() {
     }
   };
 
-  // 아이디 입력 변경 시 중복 확인 상태를 초기화
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setIsUsernameChecked(false);  // 아이디 입력 중에는 중복 확인 상태를 초기화
-    setUsernameMessage('');  // 메시지 초기화
-  };
-
   // 비밀번호 확인 로직을 useEffect 훅으로 처리
   useEffect(() => {
     if (password && confirmPassword && password !== confirmPassword) {
@@ -39,6 +34,11 @@ function SignupForm() {
       setPasswordMessage(''); // 비밀번호가 일치하면 메시지를 제거
     }
   }, [password, confirmPassword]);
+
+  // handleUsernameChange 함수 추가
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,14 +54,13 @@ function SignupForm() {
 
     setTimeout(() => {
       setFormSuccessMessage('회원가입이 성공적으로 완료되었습니다!');
-    }, 1000);
+      navigate('/');  // 추가: 회원가입 성공 후 로그인 페이지로 리다이렉트
+    }, 500);
   };
 
   return (
     <div className="container">
-      <div className="logo">
-        <img src="/logo.png" alt="logo" />
-      </div>
+      <img src="/logo.png" alt="logo" className="logo" />
 
       <form className="signup-form" onSubmit={handleSubmit}>
         <div className="input-group">
@@ -73,13 +72,12 @@ function SignupForm() {
               name="아이디"
               placeholder="아이디를 입력해 주세요"
               value={username}
-              onChange={handleUsernameChange}
+              onChange={handleUsernameChange}  // 이 부분에서 오류가 발생했음
             />
             <button type="button" className="check-btn" onClick={handleUsernameCheck}>
               중복 확인
             </button>
           </div>
-          {/* 중복 확인 버튼을 눌렀을 때만 메시지 표시 */}
           {isUsernameChecked && usernameMessage && (
             <p className={username === "codeit123" ? "error" : "success"}>{usernameMessage}</p>
           )}

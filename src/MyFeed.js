@@ -23,7 +23,7 @@ function Feed() {
 
   useEffect(() => {
     handleSearch(); // 초기 로딩 시 검색을 통해 데이터 필터링
-  }, [feedCount, sortOption, searchQuery]);
+  }, [feedCount, sortOption]);
 
   const handleSubscribeClick = () => {
     setIsSubscribed(!isSubscribed);
@@ -53,14 +53,15 @@ function Feed() {
       id: `user_${index + 1}`,
       title: `제목 ${index + 1}`,
       tags: `#태그${index + 1}`,
-      locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
+      location: `장소 ${index + 1}`,
+      date: `2024-09-0${index + 1}`,  // 날짜를 별도의 필드로 분리
       likes: Math.floor(Math.random() * 100),
       comments: Math.floor(Math.random() * 50),
       isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
     }));
 
     const filteredData = feedData.filter(feed =>
-      feed.title.toLowerCase().includes(searchQuery) ||
+      feed.title.toLowerCase().includes(searchQuery) || 
       feed.tags.toLowerCase().includes(searchQuery)
     );
 
@@ -73,7 +74,7 @@ function Feed() {
           return b.comments - a.comments;
         case 'newest':
         default:
-          return new Date(b.locationDate) - new Date(a.locationDate);
+          return new Date(b.date) - new Date(a.date);
       }
     });
 
@@ -98,7 +99,8 @@ function Feed() {
     id: `user_${index + 1}`,
     title: `제목 ${index + 1}`,
     tags: `#태그${index + 1}`,
-    locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
+    location: `장소 ${index + 1}`,
+    date: `2024-09-0${index + 1}`,  // 날짜를 별도의 필드로 분리
     likes: Math.floor(Math.random() * 100),
     comments: Math.floor(Math.random() * 50),
     isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
@@ -109,6 +111,9 @@ function Feed() {
       <nav className="navbar">
         <Link to="/main">
           <img src="/logo.png" alt="Logo" className="navbar-logo" />
+        </Link>
+        <Link to="/myfeed">
+          <p className="navbar-myfeed">내 피드</p>
         </Link>
       </nav>
 

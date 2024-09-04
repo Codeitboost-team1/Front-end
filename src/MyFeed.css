@@ -138,12 +138,13 @@ a {
     margin: 0 auto;
   }
   .divider {
-    width: 100%;
+    width: 90%;
     border: 0;
     height: 1px;
     background-color: #ddd;
     margin: 20px 0;
     margin-top:50px;
+    margin-left:5%;
   }
   
   .feed-header {

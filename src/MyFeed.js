@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
 import FeedCard from './FeedCard';
@@ -19,6 +19,11 @@ function Feed() {
   const [feedCount, setFeedCount] = useState(12);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredFeedData, setFilteredFeedData] = useState([]);
+  const [sortOption, setSortOption] = useState('newest');
+
+  useEffect(() => {
+    handleSearch(); // 초기 로딩 시 검색을 통해 데이터 필터링
+  }, [feedCount, sortOption, searchQuery]);
 
   const handleSubscribeClick = () => {
     setIsSubscribed(!isSubscribed);
@@ -34,7 +39,7 @@ function Feed() {
   };
 
   const handleFilterChange = (e) => {
-    console.log(`Selected filter: ${e.target.value}`);
+    setSortOption(e.target.value);
   };
 
   const handleSearchChange = (e) => {
@@ -59,7 +64,20 @@ function Feed() {
       feed.tags.toLowerCase().includes(searchQuery)
     );
 
-    setFilteredFeedData(filteredData);
+    // 정렬
+    const sortedData = [...filteredData].sort((a, b) => {
+      switch (sortOption) {
+        case 'likes':
+          return b.likes - a.likes;
+        case 'comments':
+          return b.comments - a.comments;
+        case 'newest':
+        default:
+          return new Date(b.locationDate) - new Date(a.locationDate);
+      }
+    });
+
+    setFilteredFeedData(sortedData);
   };
 
   const handleKeyDown = (e) => {
@@ -157,9 +175,10 @@ function Feed() {
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
           />
-          <select className="filter-select" onChange={handleFilterChange}>
-            <option value="likes">공감순</option>
+          <select className="filter-select" onChange={handleFilterChange} value={sortOption}>
             <option value="newest">최신순</option>
+            <option value="likes">공감순</option>
+            <option value="comments">댓글순</option>
           </select>
         </div>
       </section>

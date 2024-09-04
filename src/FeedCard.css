@@ -36,15 +36,13 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap:15px;
-    font-size: 12px;
   }
   .feed-location-date {
     color: #666;
-    font-size: 12px;
   }
   .feed-likes,
   .feed-comments {
     color: #333;
+    font-size:12px;
   }
   

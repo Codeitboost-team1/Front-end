@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ProfileEdit from './ProfileEdit'; // ProfileEdit 모달 컴포넌트 import
+import ProfileEdit from './ProfileEdit';
 import './MyFeed.css';
 
 function Feed() {
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isEditing, setIsEditing] = useState(false); // 모달 열기/닫기 상태
+  const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
     name: '사용자 이름',
     id: '@user_id',

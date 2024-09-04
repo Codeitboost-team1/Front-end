@@ -29,7 +29,7 @@
     margin-bottom: 5px;
   }
   
-  input, textarea {
+  .ProfileEdit.input, .ProfileEdit.textarea {
     width: 90%;
     height:50px;
     padding: 8px;

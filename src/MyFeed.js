@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
-import './MyFeed.css';
 import FeedCard from './FeedCard';
+import './MyFeed.css';
 
 function Feed() {
-  const [feedCount, setFeedCount] = useState(12); // 초기 로드 수
-
   const [isPublic, setIsPublic] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -18,6 +16,10 @@ function Feed() {
     profilePic: '/profile.png',
   });
 
+  const [feedCount, setFeedCount] = useState(12);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredFeedData, setFilteredFeedData] = useState([]);
+
   const handleSubscribeClick = () => {
     setIsSubscribed(!isSubscribed);
   };
@@ -28,20 +30,51 @@ function Feed() {
 
   const handleProfileUpdate = (updatedProfile) => {
     setProfile(updatedProfile);
-    setIsEditing(false); // 모달 닫기
+    setIsEditing(false);
   };
 
   const handleFilterChange = (e) => {
     console.log(`Selected filter: ${e.target.value}`);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const handleSearch = () => {
+    const feedData = Array.from({ length: feedCount }, (_, index) => ({
+      thumbnail: '/_.jpeg',
+      name: `사용자 ${index + 1}`,
+      id: `user_${index + 1}`,
+      title: `제목 ${index + 1}`,
+      tags: `#태그${index + 1}`,
+      locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
+      likes: Math.floor(Math.random() * 100),
+      comments: Math.floor(Math.random() * 50),
+      isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
+    }));
+
+    const filteredData = feedData.filter(feed =>
+      feed.title.toLowerCase().includes(searchQuery) ||
+      feed.tags.toLowerCase().includes(searchQuery)
+    );
+
+    setFilteredFeedData(filteredData);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // 폼 제출 방지
+      handleSearch();
+    }
+  };
+
   const loadMoreFeeds = () => {
-    // 더 많은 피드를 로드하는 함수
     setFeedCount(feedCount + 12);
   };
 
-  // 더미 데이터
-  const feedData = Array.from({ length: feedCount }, (_, index) => ({
+  // 초기 피드 데이터
+  const initialFeedData = Array.from({ length: feedCount }, (_, index) => ({
     thumbnail: '/_.jpeg',
     name: `사용자 ${index + 1}`,
     id: `user_${index + 1}`,
@@ -50,13 +83,13 @@ function Feed() {
     locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
     likes: Math.floor(Math.random() * 100),
     comments: Math.floor(Math.random() * 50),
-    isPublic: Math.random() > 0.5
+    isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
   }));
 
   return (
     <div className="feed-page">
       <nav className="navbar">
-        <Link to="/main"> 
+        <Link to="/main">
           <img src="/logo.png" alt="Logo" className="navbar-logo" />
         </Link>
       </nav>
@@ -66,8 +99,8 @@ function Feed() {
           <img src={profile.profilePic} alt="Profile" className="profilepic" />
           <div className="profile-info">
             <div className="name-id">
-              <p>codeit</p>
-              <p className="profile-id">&ensp;|&ensp;@codeit</p>
+              <p>{profile.name}</p>
+              <p className="profile-id">&ensp;|&ensp;{profile.id}</p>
             </div>
             <div className="profile-feed">
               <p className="profile-feed-name">{profile.feedName}</p>
@@ -94,32 +127,36 @@ function Feed() {
 
       {isEditing && <ProfileEdit profile={profile} onClose={() => setIsEditing(false)} onProfileUpdate={handleProfileUpdate} />}
 
-      {/* 구분선 */}
-      
-
-      {/* 피드 부분 */}
-      <section className="feed-controls">
       <hr className="divider" />
+
+      <section className="feed-controls">
         <div className="feed-header">
           <h1 className="feed-title">추억 목록</h1>
           <button className="upload-memory-btn">추억 올리기</button>
         </div>
         <div className="filter-controls">
           <div className="privacy-options">
-          <button
-            className={`privacy-btn ${isPublic ? 'selected' : ''}`}
-            onClick={() => handlePrivacyChange('public')}
-          >
-            공개
-          </button>
-          <button
-            className={`privacy-btn ${!isPublic ? 'selected' : ''}`}
-            onClick={() => handlePrivacyChange('private')}
-          >
-            비공개
-          </button>
+            <button
+              className={`privacy-btn ${isPublic ? 'selected' : ''}`}
+              onClick={() => handlePrivacyChange('public')}
+            >
+              공개
+            </button>
+            <button
+              className={`privacy-btn ${!isPublic ? 'selected' : ''}`}
+              onClick={() => handlePrivacyChange('private')}
+            >
+              비공개
+            </button>
           </div>
-          <input type="text" className="search-input" placeholder="태그 혹은 제목을 입력해주세요" />
+          <input
+            type="text"
+            className="search-input"
+            placeholder="태그 혹은 제목을 입력해주세요"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+          />
           <select className="filter-select" onChange={handleFilterChange}>
             <option value="likes">공감순</option>
             <option value="newest">최신순</option>
@@ -128,7 +165,9 @@ function Feed() {
       </section>
 
       <section className="feed-grid">
-        {feedData.map((feed, index) => (
+        {filteredFeedData.length > 0 ? filteredFeedData.map((feed, index) => (
+          <FeedCard key={index} {...feed} />
+        )) : initialFeedData.map((feed, index) => (
           <FeedCard key={index} {...feed} />
         ))}
       </section>

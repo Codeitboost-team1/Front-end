@@ -133,3 +133,97 @@ a {
     color:white;
   }
   
+  .feed-controls {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .divider {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+    margin-top:50px;
+  }
+  
+  .feed-header {
+    margin-top:30px;
+    display: grid;
+    grid-template-columns: 1fr auto; /* 가운데 정렬을 위한 설정 */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .feed-title {
+    margin-left:20%;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .upload-memory-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 170px;
+    height: 45px;
+  }
+  
+  .filter-controls {
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+    height:50px;
+  }
+  
+  .privacy-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .privacy-btn {
+    background-color: white;
+    color: black;
+    border: 1px solid #333;
+    border-radius: 22px;
+    cursor: pointer;
+    width:70px;
+    font-size: 14px;
+    height:50px;
+    margin-top: 0;
+  }
+  .privacy-btn.selected {
+    background-color: black;
+    color: white;
+  }
+  
+  .search-input {
+    grid-area: search-input;
+    width: 70%;
+    height:50px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: mixed;
+
+  }
+  
+  .filter-select {
+    background-color: white;
+    color: black;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 20px;
+    border-radius: mixed;
+    cursor: pointer;
+    width:160px;
+  }
+
+
+  

@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
 import './MyFeed.css';
+import FeedCard from './FeedCard';
 
 function Feed() {
+  const [feedCount, setFeedCount] = useState(12); // 초기 로드 수
+
   const [isPublic, setIsPublic] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +35,24 @@ function Feed() {
     console.log(`Selected filter: ${e.target.value}`);
   };
 
+  const loadMoreFeeds = () => {
+    // 더 많은 피드를 로드하는 함수
+    setFeedCount(feedCount + 12);
+  };
+
+  // 더미 데이터
+  const feedData = Array.from({ length: feedCount }, (_, index) => ({
+    thumbnail: '/_.jpeg',
+    name: `사용자 ${index + 1}`,
+    id: `user_${index + 1}`,
+    title: `제목 ${index + 1}`,
+    tags: `#태그${index + 1}`,
+    locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
+    likes: Math.floor(Math.random() * 100),
+    comments: Math.floor(Math.random() * 50),
+    isPublic: Math.random() > 0.5
+  }));
+
   return (
     <div className="feed-page">
       <nav className="navbar">
@@ -45,8 +66,8 @@ function Feed() {
           <img src={profile.profilePic} alt="Profile" className="profilepic" />
           <div className="profile-info">
             <div className="name-id">
-              <p>{profile.name}</p>
-              <p className="profile-id">&ensp;|&ensp;{profile.id}</p>
+              <p>codeit</p>
+              <p className="profile-id">&ensp;|&ensp;@codeit</p>
             </div>
             <div className="profile-feed">
               <p className="profile-feed-name">{profile.feedName}</p>
@@ -80,7 +101,7 @@ function Feed() {
       <section className="feed-controls">
       <hr className="divider" />
         <div className="feed-header">
-          <h2 className="feed-title">추억 목록</h2>
+          <h1 className="feed-title">추억 목록</h1>
           <button className="upload-memory-btn">추억 올리기</button>
         </div>
         <div className="filter-controls">
@@ -105,6 +126,13 @@ function Feed() {
           </select>
         </div>
       </section>
+
+      <section className="feed-grid">
+        {feedData.map((feed, index) => (
+          <FeedCard key={index} {...feed} />
+        ))}
+      </section>
+      <button className="more_btn" onClick={loadMoreFeeds}>더보기</button>
     </div>
   );
 }

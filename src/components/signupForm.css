@@ -19,12 +19,10 @@
     align-items: center;
   }
   
-  /* .logo img {
-    margin-bottom: 20px;
-  } */
+  
   .logo img {
-    width: 170px; 
-    height: auto; 
+      width: 170px;
+      margin-bottom: 70px;
   }
 
   
@@ -89,12 +87,15 @@
     border: 1px solid #282828;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
+    /* font-weight: 500; */
+    margin-bottom: auto;
   }
   
   .submit-btn {
-    width: 100%;
-    padding: 22px;
+    /* width: 100%;
+    padding: 22px; */
+    width: 504px;
+    height: 71px;
     background-color: #282828;
     color: white;
     border: none;

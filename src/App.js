@@ -4,6 +4,8 @@ import './App.css';
 import SignUp from './SignUp'; 
 import MyFeed from './MyFeed';
 import Main from './Main';
+import Detail from './Detail';
+
 
 function App() {
   const [id, setId] = useState('');
@@ -59,6 +61,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/myfeed" element={<MyFeed />} /> 
       <Route path="/main" element={<Main />} />
+      <Route path="/detail" element={<Detail />} />
       <Route path="/login" elemet={<App />} />
     </Routes>
   );

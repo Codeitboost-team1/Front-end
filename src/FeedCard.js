@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FeedCard.css';
+
 
 function FeedCard({ thumbnail, name, id, title, tags, locationDate, likes, comments, isPublic }) {
   return (
-    <div className="feed-card">
+    <Link to="/detail" className="feed-card-link">
+      <div className="feed-card">
       <img src={thumbnail} alt="Thumbnail" className="feed-thumbnail" />
       <div className="feed-info">
         <div className="name-id">
@@ -22,6 +25,8 @@ function FeedCard({ thumbnail, name, id, title, tags, locationDate, likes, comme
         </span>
       </div>
     </div>
+  </Link>
+    
   );
 }
 

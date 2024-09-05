@@ -24,7 +24,7 @@ const MemoryModal = () => {
             }
         }
     };
-
+ 
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));  // 태그 제거
     };

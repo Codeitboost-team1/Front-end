@@ -82,7 +82,7 @@
   min-width: 300px; /* 최소 너비 설정 */
   margin-left: 0; /* 왼쪽 여백을 없앰 */
 }
-
+ 
 .form-right {
   display: flex; /* 내부 요소를 위한 Flexbox 사용 */
   flex-direction: column; /* 내부 요소를 수직 정렬 */

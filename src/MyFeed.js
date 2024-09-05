@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
 import FeedCard from './FeedCard';
-import MemoryModal from './MemoryModal';  // Import the MemoryModal component
+import MemoryModal from './MemoryModal';
 import './MyFeed.css';
 
 function Feed() {
     const [isPublic, setIsPublic] = useState(true);
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [profile, setProfile] = useState({
         name: '사용자 이름',
         id: '@user_id',
@@ -17,6 +17,9 @@ function Feed() {
         description: '이곳에 줄글 소개가 들어갑니다.',
         profilePic: '/profile.png',
     });
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const [feedCount, setFeedCount] = useState(12);
     const [searchQuery, setSearchQuery] = useState('');
@@ -31,11 +34,11 @@ function Feed() {
         locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
         likes: Math.floor(Math.random() * 100),
         comments: Math.floor(Math.random() * 50),
-        isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
+        isPublic: Math.random() > 0.5
     })));
 
     useEffect(() => {
-        handleSearch(); // 초기 로딩 시 검색을 통해 데이터 필터링
+        handleSearch();
     }, [feedData, searchQuery, sortOption]);
 
     const handleSubscribeClick = () => {
@@ -65,7 +68,6 @@ function Feed() {
             feed.tags.toLowerCase().includes(searchQuery)
         );
 
-        // 정렬
         const sortedData = [...filteredData].sort((a, b) => {
             switch (sortOption) {
                 case 'likes':
@@ -83,7 +85,7 @@ function Feed() {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            e.preventDefault(); // 폼 제출 방지
+            e.preventDefault();
             handleSearch();
         }
     };
@@ -105,11 +107,10 @@ function Feed() {
         setFeedCount(prevCount => prevCount + 12);
     };
     
-
     const addNewFeedItem = (newFeedItem) => {
         setFeedData([newFeedItem, ...feedData]);
-        handleSearch(); // Re-filter the data to include the new item
-        setIsModalOpen(false); // Close the modal
+        handleSearch();
+        closeModal(); // Close the modal
     };
 
     return (
@@ -155,14 +156,15 @@ function Feed() {
             </section>
 
             {isEditing && <ProfileEdit profile={profile} onClose={() => setIsEditing(false)} onProfileUpdate={handleProfileUpdate} />}
-            {isModalOpen && <MemoryModal onAddNewFeedItem={addNewFeedItem} />}  {/* Pass the function to MemoryModal */}
+            {isModalOpen && <MemoryModal onAddNewFeedItem={addNewFeedItem} onClose={closeModal} />}  {/* Pass the close function to MemoryModal */}
 
             <hr className="divider" />
 
             <section className="feed-controls">
                 <div className="feed-header">
                     <h1 className="feed-title">추억 목록</h1>
-                    <button className="upload-memory-btn" onClick={() => setIsModalOpen(true)}>추억 올리기</button> {/* Open modal on click */}
+                    <button className="upload-memory-btn" onClick={() => setIsModalOpen(true)}>추억 올리기</button>
+                    
                 </div>
                 <div className="filter-controls">
                     <div className="privacy-options">

@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './MemoryModal.css'; 
 
-const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
-    const navigate = useNavigate(); // Initialize useNavigate
-    const [fileName, setFileName] = useState('');  // 파일 이름 상태 관리
-    const [isPublic, setIsPublic] = useState(false);  // 공개 여부 상태 관리
-    const [tags, setTags] = useState([]);  // 태그 상태 관리
-    const [tagInput, setTagInput] = useState('');  // 태그 입력 상태 관리
+const MemoryModal = ({ onAddNewFeedItem, onClose }) => {
+    const navigate = useNavigate();
+    const [fileName, setFileName] = useState('');
+    const [isPublic, setIsPublic] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState('');
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState('');
     const [content, setContent] = useState('');
     const [date, setDate] = useState('');
 
     const handleFileChange = (e) => {
-        setFileName(e.target.files[0].name);  // 파일 선택 시 파일 이름 상태 업데이트
+        setFileName(e.target.files[0].name);
     };
 
     const toggleVisibility = () => {
-        setIsPublic(!isPublic);  // 공개/비공개 상태 토글
+        setIsPublic(!isPublic);
     };
 
     const addTag = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             if (tagInput.trim()) {
-                setTags([...tags, tagInput.trim()]);  // Enter 키 입력 시 태그 추가
+                setTags([...tags, tagInput.trim()]);
                 setTagInput('');
             }
         }
     };
- 
+
     const removeTag = (tagToRemove) => {
-        setTags(tags.filter(tag => tag !== tagToRemove));  // 태그 제거
+        setTags(tags.filter(tag => tag !== tagToRemove));
     };
 
     const handleSubmit = () => {
@@ -48,8 +48,8 @@ const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
             isPublic
         };
 
-        onAddNewFeedItem(newFeedItem);  // Pass the new feed item to the parent
-        navigate('/myfeed'); // Navigate to MyFeed page
+        onAddNewFeedItem(newFeedItem);
+        onClose(); // Close the modal
     };
 
     return (

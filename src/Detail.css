@@ -8,7 +8,7 @@
     color: #333;
 }
 
-.header {
+.detail-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -16,17 +16,17 @@
     padding-top: 20px;
 }
 
-.left-content {
+.detail-left-content {
     max-width: 70%;
 }
 
-.right-content {
+.detail-right-content {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
-.user-info {
+.detail-user-info {
     color: #888;
     font-size: 14px;
     margin-bottom: 10px;
@@ -39,7 +39,7 @@ h1 {
     color: #222;
 }
 
-.tags span {
+.detail-tags span {
     font-size: 14px;
     background-color: #f5f5f5;
     padding: 5px 10px;
@@ -59,12 +59,12 @@ h1 {
     color: #444;
 }
 
-.actions {
+.detail-actions {
     display: flex;
     gap: 10px;
 }
 
-.action-btn{
+.detail-action-btn{
     border: none;
     padding: 10px 16px;
     font-size: 14px;
@@ -74,7 +74,7 @@ h1 {
     color:black;
 }
 
-.share-btn{
+.detail-share-btn{
     background-color: white;
     color: black;
     border: black solid 1px;
@@ -89,12 +89,12 @@ h1 {
     cursor: pointer;
 }
 
-.share-btn:hover {
+.detail-share-btn:hover {
     background-color: black;
     color:white;
 }
 
-.share-btn.liked {
+.detail-share-btn.liked {
     background-color: black;
     color: white;
 }

@@ -1,0 +1,65 @@
+.memory-delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .memory-delete-modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 380px;
+    height:250px;
+    max-width: 90%;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .memory-delete-close-btn {
+    position: absolute;
+    bottom: 200px;
+    left: 170px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  h2 {
+    margin-top:15px;
+    font-size: 18px;
+
+  }
+  
+  .memory-delete-question {
+    margin-top:30px;
+    font-size: 16px;
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+  }
+  
+  .memory-delete-delete-btn {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width:300px;
+    height:50px;
+  }
+  

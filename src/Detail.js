@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Detail.css';
+import MemoryDelete from './MemoryDelete';
 
 const DetailPage = () => {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const handleDeleteClick = () => {
+        setShowDeleteModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowDeleteModal(false);
+      };
+    
+      const handleDeleteMemory = () => {
+        setShowDeleteModal(false);
+      };
+    
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
     };
@@ -25,26 +39,29 @@ const DetailPage = () => {
                 </Link>
             </nav>
             <section className="postcontainer">
-                <header className="header">
-                    <div className="left-content">
-                        <div className="user-info">
+                <header className="detail-header">
+                    <div className="detail-left-content">
+                        <div className="detail-user-info">
                             <span>codeit</span> | <span>@codeit</span>
                         </div>
                         <h1>제목 1</h1>
-                        <div className="tags">
+                        <div className="detail-tags">
                             <span>#태그1</span>
                         </div>
                         <div className="post-details">
                             <span>장소1</span> · <span>2024-09-01</span> · <span className="likes">120</span> · <span className="comments-count">8</span>
                         </div>
                     </div>
-                    <div className="right-content">
-                        <div className="actions">
-                            <button className="action-btn">추억 수정하기</button>
-                            <button className="action-btn">추억 삭제하기</button>
+                    <div className="detail-right-content">
+                        <div className="detail-actions">
+                            <button className="detail-action-btn">추억 수정하기</button>
+                            <button className="detail-action-btn" onClick={handleDeleteClick}>추억 삭제하기</button>
+                            {showDeleteModal && (
+                                <MemoryDelete onClose={handleCloseModal} onDelete={handleDeleteMemory} />
+                            )}
                         </div>
                         <button 
-                            className={`share-btn ${isLiked ? 'liked' : ''}`} 
+                            className={`detail-share-btn ${isLiked ? 'liked' : ''}`} 
                             onClick={handleLikeClick}
                         >
                             {isLiked ? '공감 완료' : '공감 보내기'}

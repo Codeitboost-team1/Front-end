@@ -1,4 +1,4 @@
-body {
+.modal {
   background-color: #FAFAFA;
   font-family: 'IBM Plex Sans', sans-serif;
   display: flex;
@@ -11,7 +11,7 @@ body {
   /* transform: scale(0.65); */
 }
 
-.logo {
+.modal.logo {
   width: 137px;
   height: 48px;
   margin-bottom: 104px; /* 로고와 제목 사이 간격 */
@@ -58,7 +58,7 @@ body {
   margin: 0;
 }
 
-.close-btn {
+.modal close-btn {
   position: absolute;
   right: 0;
   background: none;
@@ -104,7 +104,7 @@ textarea {
   background-color: transparent; /* 배경색을 투명으로 설정 */
 }
 
-textarea {
+.modal textarea {
   height: 200px;
   background-color: transparent; /* 배경색을 투명으로 설정 */
 }

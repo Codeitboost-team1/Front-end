@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
 import FeedCard from './FeedCard';
 import './MyFeed.css';
+import MemoryModal from './MemoryModal';
 
 function Feed() {
   const [isPublic, setIsPublic] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [profile, setProfile] = useState({
     name: '사용자 이름',
     id: '@user_id',
@@ -65,7 +67,6 @@ function Feed() {
       feed.tags.toLowerCase().includes(searchQuery)
     );
 
-    // 정렬
     const sortedData = [...filteredData].sort((a, b) => {
       switch (sortOption) {
         case 'likes':
@@ -149,13 +150,14 @@ function Feed() {
       </section>
 
       {isEditing && <ProfileEdit profile={profile} onClose={() => setIsEditing(false)} onProfileUpdate={handleProfileUpdate} />}
+      {isUploading && <MemoryModal MemoryModal={MemoryModal} onClose={() => setIsUploading(false)} />}
 
       <hr className="divider" />
 
       <section className="feed-controls">
         <div className="feed-header">
           <h1 className="feed-title">추억 목록</h1>
-          <button className="upload-memory-btn">추억 올리기</button>
+          <button className="upload-memory-btn" onClick={() => setIsUploading(true)}>추억 올리기</button>
         </div>
         <div className="filter-controls">
           <div className="privacy-options">

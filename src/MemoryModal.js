@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './MemoryModal.css';  // CSS 파일을 가져옵니다
-import logo from './images/logo.png';  // 로고 이미지를 가져옵니다
+import './MemoryModal.css'; 
+import logo from './images/logo.png';
 
 const MemoryModal = () => {
     const [fileName, setFileName] = useState('');  // 파일 이름 상태 관리

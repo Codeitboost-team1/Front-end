@@ -22,10 +22,21 @@ function Feed() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredFeedData, setFilteredFeedData] = useState([]);
     const [sortOption, setSortOption] = useState('newest');
+    const [feedData, setFeedData] = useState(Array.from({ length: feedCount }, (_, index) => ({
+        thumbnail: '/_.jpeg',
+        name: `사용자 ${index + 1}`,
+        id: `user_${index + 1}`,
+        title: `제목 ${index + 1}`,
+        tags: `#태그${index + 1}`,
+        locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
+        likes: Math.floor(Math.random() * 100),
+        comments: Math.floor(Math.random() * 50),
+        isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
+    })));
 
     useEffect(() => {
         handleSearch(); // 초기 로딩 시 검색을 통해 데이터 필터링
-    }, [feedCount, sortOption]);
+    }, [feedData, searchQuery, sortOption]);
 
     const handleSubscribeClick = () => {
         setIsSubscribed(!isSubscribed);
@@ -49,18 +60,6 @@ function Feed() {
     };
 
     const handleSearch = () => {
-        const feedData = Array.from({ length: feedCount }, (_, index) => ({
-            thumbnail: '/_.jpeg',
-            name: `사용자 ${index + 1}`,
-            id: `user_${index + 1}`,
-            title: `제목 ${index + 1}`,
-            tags: `#태그${index + 1}`,
-            locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
-            likes: Math.floor(Math.random() * 100),
-            comments: Math.floor(Math.random() * 50),
-            isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
-        }));
-
         const filteredData = feedData.filter(feed =>
             feed.title.toLowerCase().includes(searchQuery) || 
             feed.tags.toLowerCase().includes(searchQuery)
@@ -90,21 +89,28 @@ function Feed() {
     };
 
     const loadMoreFeeds = () => {
-        setFeedCount(feedCount + 12);
+        const newFeedData = Array.from({ length: 12 }, (_, index) => ({
+            thumbnail: '/_.jpeg',
+            name: `사용자 ${feedCount + index + 1}`,
+            id: `user_${feedCount + index + 1}`,
+            title: `제목 ${feedCount + index + 1}`,
+            tags: `#태그${feedCount + index + 1}`,
+            locationDate: `장소 ${feedCount + index + 1} | 2024-09-0${(feedCount + index + 1) % 30}`,
+            likes: Math.floor(Math.random() * 100),
+            comments: Math.floor(Math.random() * 50),
+            isPublic: Math.random() > 0.5
+        }));
+    
+        setFeedData(prevFeedData => [...prevFeedData, ...newFeedData]);
+        setFeedCount(prevCount => prevCount + 12);
     };
+    
 
-    // 초기 피드 데이터
-    const initialFeedData = Array.from({ length: feedCount }, (_, index) => ({
-        thumbnail: '/_.jpeg',
-        name: `사용자 ${index + 1}`,
-        id: `user_${index + 1}`,
-        title: `제목 ${index + 1}`,
-        tags: `#태그${index + 1}`,
-        locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
-        likes: Math.floor(Math.random() * 100),
-        comments: Math.floor(Math.random() * 50),
-        isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
-    }));
+    const addNewFeedItem = (newFeedItem) => {
+        setFeedData([newFeedItem, ...feedData]);
+        handleSearch(); // Re-filter the data to include the new item
+        setIsModalOpen(false); // Close the modal
+    };
 
     return (
         <div className="feed-page">
@@ -149,7 +155,7 @@ function Feed() {
             </section>
 
             {isEditing && <ProfileEdit profile={profile} onClose={() => setIsEditing(false)} onProfileUpdate={handleProfileUpdate} />}
-            {isModalOpen && <MemoryModal onClose={() => setIsModalOpen(false)} />}  {/* Render the modal conditionally */}
+            {isModalOpen && <MemoryModal onAddNewFeedItem={addNewFeedItem} />}  {/* Pass the function to MemoryModal */}
 
             <hr className="divider" />
 
@@ -192,7 +198,7 @@ function Feed() {
             <section className="feed-grid">
                 {filteredFeedData.length > 0 ? filteredFeedData.map((feed, index) => (
                     <FeedCard key={index} {...feed} />
-                )) : initialFeedData.map((feed, index) => (
+                )) : feedData.map((feed, index) => (
                     <FeedCard key={index} {...feed} />
                 ))}
             </section>

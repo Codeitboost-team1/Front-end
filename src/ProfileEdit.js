@@ -23,11 +23,11 @@ function ProfileEdit({ profile, onClose, onProfileUpdate }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-btn" onClick={onClose}>x</button>
+    <div className="profile-modal-overlay">
+      <div className="profile-modal-content">
+        <button className="profile-close-btn" onClick={onClose}>x</button>
         <h2>프로필 수정</h2>
-        <form className="modal-form" onSubmit={handleSubmit}>
+        <form className="profile-modal-form" onSubmit={handleSubmit}>
           <div>
             <label>추억 보관소명</label>
             <input type="text" value={feedName} onChange={(e) => setFeedName(e.target.value)} placeholder="이름 입력" />
@@ -40,7 +40,7 @@ function ProfileEdit({ profile, onClose, onProfileUpdate }) {
             <label>줄글 소개</label>
             <textarea className="introduce" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="소개 입력"></textarea>
           </div>
-          <button className="submit-btn" type="submit">수정하기</button>
+          <button className="profile-submit-btn" type="submit">수정하기</button>
         </form>
       </div>
     </div>

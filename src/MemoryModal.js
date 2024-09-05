@@ -30,9 +30,9 @@ const MemoryModal = () => {
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-            <div className="modal-header">
+        <div className="memory-modal-overlay">
+            <div className="memory-modal-content">
+            <div className="memory-modal-header">
                 <h1>추억 올리기</h1>
                 <button className="memory-modal-close-btn">x</button>
             </div>

@@ -1,4 +1,4 @@
-.modal-overlay {
+.profile-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.profile-modal-content {
   background-color: white;
   padding: 20px;
   padding-block: 40px;
@@ -30,7 +30,7 @@ label {
   margin-bottom: 5px;
 }
 
-.modal-form input, .modal-form textarea {
+.profile-modal-form input, .modal-form textarea {
   width: 90%;
   height:50px;
   padding: 8px;
@@ -40,7 +40,7 @@ label {
    background-color: white;
 }
 
-.modal-form input[type="file"] {
+.profile-modal-form input[type="file"] {
   padding: 0;
 }
 
@@ -48,9 +48,9 @@ label {
   height:100px !important;
 }
 
-.close-btn {
+.profile-close-btn {
   position: absolute;
-  bottom:510px;
+  bottom:540px;
   left:180px;
   background: none;
   border: none;
@@ -59,7 +59,7 @@ label {
   color: #333;
 }
 
-.submit-btn {
+.profile-submit-btn {
   width: 90%;
   height:40px;
   font-size:16px;

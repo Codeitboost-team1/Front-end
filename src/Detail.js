@@ -2,28 +2,43 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Detail.css';
 import MemoryDelete from './MemoryDelete';
+import Comment from './Comment';
 
-const DetailPage = () => {
+const Detail = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showCommentModal, setShowCommentModal] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
+    // Handlers for MemoryDelete modal
     const handleDeleteClick = () => {
         setShowDeleteModal(true);
-      };
-    
-      const handleCloseModal = () => {
+    };
+
+    const handleCloseDeleteModal = () => {
         setShowDeleteModal(false);
-      };
-    
-      const handleDeleteMemory = () => {
+    };
+
+    const handleDeleteMemory = () => {
+        // Handle the memory delete action here
         setShowDeleteModal(false);
-      };
-    
+    };
+
+    // Handlers for Comment modal
+    const handleCommentClick = () => {
+        setShowCommentModal(true);
+    };
+
+    const handleCloseCommentModal = () => {
+        setShowCommentModal(false);
+    };
+
+    // Like button handler
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
     };
 
+    // Pagination handler
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -57,7 +72,7 @@ const DetailPage = () => {
                             <button className="detail-action-btn">추억 수정하기</button>
                             <button className="detail-action-btn" onClick={handleDeleteClick}>추억 삭제하기</button>
                             {showDeleteModal && (
-                                <MemoryDelete onClose={handleCloseModal} onDelete={handleDeleteMemory} />
+                                <MemoryDelete onClose={handleCloseDeleteModal} onDelete={handleDeleteMemory} />
                             )}
                         </div>
                         <button 
@@ -98,7 +113,11 @@ const DetailPage = () => {
                     {/* 추가 댓글을 여기서 렌더링 */}
                 </section>
 
-                <button id="commentButton" className="comment-btn">댓글 등록하기</button>
+                <button id="commentButton" className="comment-btn" onClick={handleCommentClick}>댓글 등록하기</button>
+
+                {showCommentModal && (
+                    <Comment onClose={handleCloseCommentModal} />
+                )}
 
                 <div className="pagination">
                     {[1, 2, 3, 4, 5].map(page => (
@@ -106,7 +125,10 @@ const DetailPage = () => {
                             key={page} 
                             href="#" 
                             className={`pagination-link ${currentPage === page ? 'active' : ''}`} 
-                            onClick={() => handlePageChange(page)}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(page);
+                            }}
                         >
                             {page}
                         </a>
@@ -117,4 +139,4 @@ const DetailPage = () => {
     );
 }
 
-export default DetailPage;
+export default Detail;

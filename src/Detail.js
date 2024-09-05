@@ -9,6 +9,11 @@ const Detail = () => {
     const [showCommentModal, setShowCommentModal] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [comments, setComments] = useState([
+        { user: '사용자1', date: '24.09.01 21:50', text: '댓글1' },
+        { user: '사용자2', date: '24.09.02 12:30', text: '댓글2' },
+        // Add more comments here
+    ]);
 
     // Handlers for MemoryDelete modal
     const handleDeleteClick = () => {
@@ -30,6 +35,11 @@ const Detail = () => {
     };
 
     const handleCloseCommentModal = () => {
+        setShowCommentModal(false);
+    };
+
+    const handleAddComment = (newComment) => {
+        setComments([...comments, newComment]);
         setShowCommentModal(false);
     };
 
@@ -64,7 +74,7 @@ const Detail = () => {
                             <span>#태그1</span>
                         </div>
                         <div className="post-details">
-                            <span>장소1</span> · <span>2024-09-01</span> · <span className="likes">120</span> · <span className="comments-count">8</span>
+                            <span>장소1</span> · <span>2024-09-01</span> · <span className="likes">120</span> · <span className="comments-count">{comments.length}</span>
                         </div>
                     </div>
                     <div className="detail-right-content">
@@ -96,27 +106,22 @@ const Detail = () => {
                 </section>
 
                 <section className="comments-section">
-                    <h2>댓글 8</h2>
+                    <h2>댓글 {comments.length}</h2>
                     <hr className="comment-divider" />
-                    <div className="comment">
-                        <div className="comment-header">
-                            <strong>사용자1</strong> <span className="comment-date">&ensp;24.09.01 21:50</span>
+                    {comments.map((comment, index) => (
+                        <div key={index} className="comment">
+                            <div className="comment-header">
+                                <strong>{comment.user}</strong> <span className="comment-date">&ensp;{comment.date}</span>
+                            </div>
+                            <p className="comment-text">{comment.text}</p>
                         </div>
-                        <p className="comment-text">댓글1</p>
-                    </div>
-                    <div className="comment">
-                        <div className="comment-header">
-                            <strong>사용자2</strong> <span className="comment-date">&ensp; 24.09.02 12:30</span>
-                        </div>
-                        <p className="comment-text">댓글2</p>
-                    </div>
-                    {/* 추가 댓글을 여기서 렌더링 */}
+                    ))}
                 </section>
 
                 <button id="commentButton" className="comment-btn" onClick={handleCommentClick}>댓글 등록하기</button>
 
                 {showCommentModal && (
-                    <Comment onClose={handleCloseCommentModal} />
+                    <Comment onClose={handleCloseCommentModal} onAddComment={handleAddComment} />
                 )}
 
                 <div className="pagination">

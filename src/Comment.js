@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import './Comment.css';
 
-const Comment = ({ onClose }) => {
-  const [comment, setComment] = useState('');
+const Comment = ({ onClose,onAddComment }) => {
+    const [commentText, setCommentText] = useState('');
 
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
+    const handleCommentChange = (e) => {
+        setCommentText(e.target.value);
+    };
 
-  const handleSubmit = () => {
-    // Perform comment submission logic here
-    console.log('Comment submitted:', comment);
-
-    // Close the modal after submission
-    onClose();
-  };
+    const handleAddComment = () => {
+        const newComment = {
+            user: '사용자3',  // Adjust this as needed
+            date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
+            text: commentText,
+        };
+        onAddComment(newComment);
+        setCommentText('');
+    };
 
   return (
     <div className="comment-modal-overlay" onClick={onClose}>
@@ -24,11 +26,11 @@ const Comment = ({ onClose }) => {
         <textarea
           id="comment-modal-textarea"
           className="comment-modal-textarea"
-          value={comment}
+          value={commentText}
           onChange={handleCommentChange}
           placeholder="댓글을 입력하세요..."
         />
-        <button className="comment-modal--submit-btn" onClick={handleSubmit}>등록하기</button>
+        <button className="comment-modal--submit-btn" onClick={handleAddComment}>등록하기</button>
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
         <div className="memory-modal-overlay">
             <div className="memory-modal-content">
                 <div className="memory-modal-header">
-                    <h1>추억 올리기</h1>
+                    <h1>추억 수정하기</h1>
                     <button className="memory-modal-close-btn" onClick={onClose}>x</button>
                 </div>
                 <form className="memory-form">
@@ -155,7 +155,7 @@ const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
                         </div>
                     </div>
                 </form>
-                <button type="button" className="submit-btn" onClick={handleSubmit}>올리기</button>
+                <button type="button" className="submit-btn" onClick={handleSubmit}>수정하기</button>
             </div>
         </div>
     );

@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import './Detail.css';
 import MemoryDelete from './MemoryDelete';
 import Comment from './Comment';
+import MemoryEdit from './MemoryEdit';  // Import the MemoryEdit component
 
 const Detail = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);  // New state for MemoryEdit modal
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [comments, setComments] = useState([
@@ -41,6 +43,20 @@ const Detail = () => {
     const handleAddComment = (newComment) => {
         setComments([...comments, newComment]);
         setShowCommentModal(false);
+    };
+
+    // Handlers for MemoryEdit modal
+    const handleEditClick = () => {
+        setShowEditModal(true);  // Open the MemoryEdit modal
+    };
+
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+    };
+
+    const handleEditMemory = (updatedMemory) => {
+        // Handle the memory edit action here
+        setShowEditModal(false);
     };
 
     // Like button handler
@@ -79,10 +95,13 @@ const Detail = () => {
                     </div>
                     <div className="detail-right-content">
                         <div className="detail-actions">
-                            <button className="detail-action-btn">추억 수정하기</button>
+                            <button className="detail-action-btn" onClick={handleEditClick}>추억 수정하기</button> 
                             <button className="detail-action-btn" onClick={handleDeleteClick}>추억 삭제하기</button>
                             {showDeleteModal && (
                                 <MemoryDelete onClose={handleCloseDeleteModal} onDelete={handleDeleteMemory} />
+                            )}
+                            {showEditModal && (
+                                <MemoryEdit onClose={handleCloseEditModal} onEdit={handleEditMemory} /> 
                             )}
                         </div>
                         <button 

@@ -53,8 +53,7 @@ function Feed() {
       id: `user_${index + 1}`,
       title: `제목 ${index + 1}`,
       tags: `#태그${index + 1}`,
-      location: `장소 ${index + 1}`,
-      date: `2024-09-0${index + 1}`,  // 날짜를 별도의 필드로 분리
+      locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
       likes: Math.floor(Math.random() * 100),
       comments: Math.floor(Math.random() * 50),
       isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
@@ -99,8 +98,7 @@ function Feed() {
     id: `user_${index + 1}`,
     title: `제목 ${index + 1}`,
     tags: `#태그${index + 1}`,
-    location: `장소 ${index + 1}`,
-    date: `2024-09-0${index + 1}`,  // 날짜를 별도의 필드로 분리
+    locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
     likes: Math.floor(Math.random() * 100),
     comments: Math.floor(Math.random() * 50),
     isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정

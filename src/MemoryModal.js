@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './MemoryModal.css'; 
-import logo from './images/logo.png';
 
 const MemoryModal = () => {
     const [fileName, setFileName] = useState('');  // 파일 이름 상태 관리
@@ -33,7 +32,6 @@ const MemoryModal = () => {
     return (
         <div className="modal">
             <div className="modal-header">
-                <img src={logo} alt="로고" className="logo" />
                 <h1>추억 올리기</h1>
                 <button className="close-btn">&times;</button>
             </div>

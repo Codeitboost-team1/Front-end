@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './signupForm.css';
-import { useNavigate } from 'react-router-dom';  // 추가: useNavigate 가져오기
-  
+import { useNavigate } from 'react-router-dom';
+
 function SignupForm() {
+  const [email, setEmail] = useState('');  // 이메일 상태 추가
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,12 +14,10 @@ function SignupForm() {
   const [formSuccessMessage, setFormSuccessMessage] = useState('');
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
 
-  const navigate = useNavigate();  // 추가: useNavigate 훅 사용
+  const navigate = useNavigate();
 
-  // 아이디 중복 확인 버튼을 눌렀을 때 메시지 업데이트
   const handleUsernameCheck = () => {
     setIsUsernameChecked(true);
-
     if (username === "codeit123") {
       setUsernameMessage("이미 사용중인 아이디입니다.");
     } else {
@@ -26,43 +25,62 @@ function SignupForm() {
     }
   };
 
-  // 비밀번호 확인 로직을 useEffect 훅으로 처리
   useEffect(() => {
     if (password && confirmPassword && password !== confirmPassword) {
       setPasswordMessage("비밀번호가 일치하지 않습니다.");
     } else {
-      setPasswordMessage(''); // 비밀번호가 일치하면 메시지를 제거
+      setPasswordMessage('');
     }
   }, [password, confirmPassword]);
 
-  // handleUsernameChange 함수 추가
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
+      email,          // 이메일 추가
       username,
       password,
       name,
       memoryBoxName,
     };
 
-    console.log('Submitted data:', formData);
+    try {
+      const response = await fetch('http://localhost:3001/api/register', {  // 백엔드 URL을 localhost:3001로 설정
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
       setFormSuccessMessage('회원가입이 성공적으로 완료되었습니다!');
-      navigate('/');  // 추가: 회원가입 성공 후 로그인 페이지로 리다이렉트
-    }, 500);
+      navigate('/');  // 회원가입 성공 후 리다이렉트
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
   };
 
   return (
     <div className="container">
       <img src="/logo.png" alt="logo" className="logo" />
-
       <form className="signup-form" onSubmit={handleSubmit}>
+        <div className="input-group">
+          <label htmlFor="email">이메일</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="이메일을 입력해 주세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
         <div className="input-group">
           <label htmlFor="아이디">아이디</label>
           <div className="input-with-button">
@@ -72,7 +90,7 @@ function SignupForm() {
               name="아이디"
               placeholder="아이디를 입력해 주세요"
               value={username}
-              onChange={handleUsernameChange}  // 이 부분에서 오류가 발생했음
+              onChange={(e) => setUsername(e.target.value)}
             />
             <button type="button" className="check-btn" onClick={handleUsernameCheck}>
               중복 확인

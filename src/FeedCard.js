@@ -5,7 +5,7 @@ import './FeedCard.css';
 
 function FeedCard({ thumbnail, name, id, title, tags, locationDate, likes, comments, isPublic }) {
   return (
-    <Link to="/detail" className="feed-card-link">
+    <Link to={`/detail/${id}`} className="feed-card-link">
       <div className="feed-card">
       <img src={thumbnail} alt="Thumbnail" className="feed-thumbnail" />
       <div className="feed-info">

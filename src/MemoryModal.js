@@ -9,6 +9,7 @@ const MemoryModal = ({ onAddNewFeedItem, onClose }) => {
   const [location, setLocation] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
+  const [isPublic, setIsPublic] = useState(true); // 공개 여부 상태 추가
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,6 +33,10 @@ const MemoryModal = ({ onAddNewFeedItem, onClose }) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
+  const toggleVisibility = () => {
+    setIsPublic(!isPublic);
+  };
+
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');  // localStorage에서 userId 가져오기
@@ -43,7 +48,8 @@ const MemoryModal = ({ onAddNewFeedItem, onClose }) => {
       location,
       date,
       tags,
-      userId  // userId를 본문에 포함
+      isPublic,  // 공개 여부 포함
+      userId
     };
 
     try {
@@ -155,12 +161,28 @@ const MemoryModal = ({ onAddNewFeedItem, onClose }) => {
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                     />
+                    <div className="visibility-container">
+                    <label htmlFor="visibility-toggle" className="visibility-label">
+                        {isPublic ? '공개' : '비공개'}
+                    </label>
+                    <label className="switch">
+                        <input 
+                            type="checkbox" 
+                            id="visibility-toggle" 
+                            checked={isPublic} 
+                            onChange={toggleVisibility} 
+                        />
+                        <span className="slider"></span>
+                    </label>
                 </div>
+                </div>
+                
+                
             </form>
             <button type="button" className="submit-btn" onClick={handleSubmit}>올리기</button>
         </div>
     </div>
-);
+  );
 };
 
 export default MemoryModal;

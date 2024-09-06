@@ -8,34 +8,58 @@ function Feed() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredFeedData, setFilteredFeedData] = useState([]);
   const [sortOption, setSortOption] = useState('newest');
+  const [feedData, setFeedData] = useState([]);
 
   useEffect(() => {
-    handleSearch(); // feedCount나 sortOption 변경 시에만 검색 실행
-  }, [feedCount, sortOption]);
+    fetchPosts(); // 컴포넌트가 마운트될 때 데이터를 불러옴
+  }, []);
+
+  useEffect(() => {
+    handleSearch(); // feedCount 나 sortOption 변경 시에만 검색 실행
+  }, [feedCount, sortOption, feedData, searchQuery]);
+
+  const fetchPosts = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:3001/api/posts`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // JWT 포함
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      const transformedData = data.map(post => ({
+        id: post._id,
+        title: post.title,
+        tags: post.tags.join(', '),
+        locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
+        likes: post.likes,
+        comments: post.comments || 0,
+        isPublic: post.isPublic,
+        thumbnail: post.image_name || '/_.jpeg'
+      }));
+
+      setFeedData(transformedData);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
   const handleSearch = () => {
-    const feedData = Array.from({ length: feedCount }, (_, index) => ({
-      thumbnail: '/_.jpeg',
-      name: `사용자 ${index + 1}`,
-      id: `user_${index + 1}`,
-      title: `제목 ${index + 1}`,
-      tags: `#태그${index + 1}`,
-      locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
-      likes: Math.floor(Math.random() * 100),
-      comments: Math.floor(Math.random() * 50),
-      isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
-    }));
-
     const filteredData = feedData.filter(feed =>
       feed.title.toLowerCase().includes(searchQuery) ||
       feed.tags.toLowerCase().includes(searchQuery)
     );
 
-    // 정렬
     const sortedData = [...filteredData].sort((a, b) => {
       switch (sortOption) {
         case 'likes':
@@ -53,27 +77,39 @@ function Feed() {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // 폼 제출 방지
-      handleSearch(); // Enter 키를 누를 때만 검색 실행
+      e.preventDefault();
+      handleSearch();
     }
   };
 
-  const loadMoreFeeds = () => {
-    setFeedCount(feedCount + 12);
-  };
+  const loadMoreFeeds = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/posts?offset=${feedCount}&limit=12`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // JWT 포함
+        }
+      });
 
-  // 초기 피드 데이터
-  const initialFeedData = Array.from({ length: feedCount }, (_, index) => ({
-    thumbnail: '/_.jpeg',
-    name: `사용자 ${index + 1}`,
-    id: `user_${index + 1}`,
-    title: `제목 ${index + 1}`,
-    tags: `#태그${index + 1}`,
-    locationDate: `장소 ${index + 1} | 2024-09-0${index + 1}`,
-    likes: Math.floor(Math.random() * 100),
-    comments: Math.floor(Math.random() * 50),
-    isPublic: Math.random() > 0.5 // 무작위로 공개/비공개 설정
-  }));
+      const newPosts = await response.json();
+
+      const transformedNewPosts = newPosts.map(post => ({
+        id: post._id,
+        title: post.title,
+        tags: post.tags.join(', '),
+        locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
+        likes: post.likes,
+        comments: post.comments || 0,
+        isPublic: post.isPublic,
+        thumbnail: post.image_name || '/_.jpeg'
+      }));
+
+      setFeedData(prevFeedData => [...prevFeedData, ...transformedNewPosts]);
+      setFeedCount(prevCount => prevCount + 12);
+    } catch (error) {
+      console.error('Error loading more posts:', error);
+    }
+  };
 
   return (
     <div className="feed-page">
@@ -88,7 +124,7 @@ function Feed() {
 
       <section className="feed-controls">
         <div className="filter-controls">
-        <input
+          <input
             type="text"
             className="search-input"
             placeholder="태그 혹은 제목을 입력해주세요"
@@ -96,13 +132,18 @@ function Feed() {
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
           />
+          <select className="filter-select" onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
+            <option value="newest">최신순</option>
+            <option value="likes">공감순</option>
+            <option value="comments">댓글순</option>
+          </select>
         </div>
       </section>
 
       <section className="feed-grid">
         {filteredFeedData.length > 0 ? filteredFeedData.map((feed, index) => (
           <FeedCard key={index} {...feed} />
-        )) : initialFeedData.map((feed, index) => (
+        )) : feedData.map((feed, index) => (
           <FeedCard key={index} {...feed} />
         ))}
       </section>

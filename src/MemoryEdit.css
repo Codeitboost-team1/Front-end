@@ -261,3 +261,9 @@
   .submit-btn:hover {
     background-color: #444;
   }
+
+.preview-img {
+    max-width: 35px; /* 부모 컨테이너의 너비에 맞추기 */
+    max-height: 35px; /* 원하는 최대 높이 설정 */
+    object-fit: contain; /* 이미지 비율을 유지하면서 크기 조절 */
+}

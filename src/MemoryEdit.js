@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './MemoryEdit.css';
 
 const MemoryEdit = ({ onClose, onEdit, initialData }) => {
-    const [file, setFile] = useState(null);
+    const [filePreview, setFilePreview] = useState(null); // 이미지 미리보기 상태 추가
     const [fileName, setFileName] = useState('');  
     const [isPublic, setIsPublic] = useState(false);  
     const [tags, setTags] = useState([]);  
@@ -21,14 +21,14 @@ const MemoryEdit = ({ onClose, onEdit, initialData }) => {
             setIsPublic(initialData.isPublic || false);
             setContent(initialData.content || '');
             setFileName(initialData.fileName || '');
-            // 기존 파일을 미리보기로 설정하지 않음
         }
     }, [initialData]);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
         setFileName(selectedFile.name);
+        const previewURL = URL.createObjectURL(selectedFile);
+        setFilePreview(previewURL);  // 파일 미리보기 URL 업데이트
     };
 
     const toggleVisibility = () => {
@@ -57,6 +57,7 @@ const MemoryEdit = ({ onClose, onEdit, initialData }) => {
             date,
             content,
             fileName,
+            filePreview,  // 파일 미리보기 URL 포함
             isPublic
         };
 
@@ -102,6 +103,12 @@ const MemoryEdit = ({ onClose, onEdit, initialData }) => {
                                 onChange={handleFileChange} 
                             />
                         </div>
+
+                        {filePreview && (
+                            <div className="image-preview">
+                                <img src={filePreview} alt="Preview" className="preview-img" />
+                            </div>
+                        )}
 
                         <label htmlFor="location">장소</label>
                         <input 

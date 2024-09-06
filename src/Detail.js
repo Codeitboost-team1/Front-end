@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Detail.css';
 import MemoryDelete from './MemoryDelete';
 import Comment from './Comment';
-import MemoryEdit from './MemoryEdit';  
+import MemoryEdit from './MemoryEdit';
 
 const Detail = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -70,7 +70,7 @@ const Detail = () => {
             tags: updatedMemory.tags,
             content: updatedMemory.content,
             fileName: updatedMemory.fileName,
-            isPublic: updatedMemory.isPublic
+            filePreview: updatedMemory.filePreview  // Ensure this is updated
         }));
         setShowEditModal(false);  
     };

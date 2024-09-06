@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
 import FeedCard from './FeedCard';
 import MemoryModal from './MemoryModal';
 import './MyFeed.css';
-
+//ㅇ
 function Feed() {
     const [isPublic, setIsPublic] = useState(true);
     const [isSubscribed, setIsSubscribed] = useState(false);

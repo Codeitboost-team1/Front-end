@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FeedCard from './FeedCard';
 import './Main.css';
+//ㅇ
 
 function Feed() {
   const [feedCount, setFeedCount] = useState(12);

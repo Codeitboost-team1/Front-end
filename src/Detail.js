@@ -8,14 +8,22 @@ import MemoryEdit from './MemoryEdit';  // Import the MemoryEdit component
 const Detail = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);  // New state for MemoryEdit modal
+    const [showEditModal, setShowEditModal] = useState(false);  // State for MemoryEdit modal
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [memoryData, setMemoryData] = useState({
+        title: '제목 1',
+        location: '장소1',
+        date: '2024-09-01',
+        tags: '#태그1',
+        likes: 120,
+        comments: 2
+    });
     const [comments, setComments] = useState([
         { user: '사용자1', date: '24.09.01 21:50', text: '댓글1' },
         { user: '사용자2', date: '24.09.02 12:30', text: '댓글2' },
-        // Add more comments here
     ]);
+
 
     // Handlers for MemoryDelete modal
     const handleDeleteClick = () => {
@@ -55,8 +63,8 @@ const Detail = () => {
     };
 
     const handleEditMemory = (updatedMemory) => {
-        // Handle the memory edit action here
-        setShowEditModal(false);
+        setMemoryData(updatedMemory);  // Update memory data
+        setShowEditModal(false);  // Close the MemoryEdit modal
     };
 
     // Like button handler
@@ -85,12 +93,12 @@ const Detail = () => {
                         <div className="detail-user-info">
                             <span>codeit</span> | <span>@codeit</span>
                         </div>
-                        <h1>제목 1</h1>
+                        <h1>{memoryData.title}</h1>
                         <div className="detail-tags">
-                            <span>#태그1</span>
+                            <span>{memoryData.tags}</span>
                         </div>
                         <div className="post-details">
-                            <span>장소1</span> · <span>2024-09-01</span> · <span className="likes">120</span> · <span className="comments-count">{comments.length}</span>
+                            <span>{memoryData.location}</span> · <span>{memoryData.date}</span> · <span className="likes">{memoryData.likes}</span> · <span className="comments-count">{comments.length}</span>
                         </div>
                     </div>
                     <div className="detail-right-content">
@@ -101,7 +109,11 @@ const Detail = () => {
                                 <MemoryDelete onClose={handleCloseDeleteModal} onDelete={handleDeleteMemory} />
                             )}
                             {showEditModal && (
-                                <MemoryEdit onClose={handleCloseEditModal} onEdit={handleEditMemory} /> 
+                                <MemoryEdit 
+                                    onClose={handleCloseEditModal} 
+                                    onEdit={handleEditMemory} 
+                                    initialData={memoryData}  // Pass initial data to MemoryEdit
+                                />
                             )}
                         </div>
                         <button 

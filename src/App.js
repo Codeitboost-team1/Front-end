@@ -7,7 +7,7 @@ import Main from './Main';
 import Detail from './Detail';
 
 function App() {
-  const [id, setId] = useState('');
+  const [id, setId] = useState(''); // 이메일로 변경할 예정
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); 
   const navigate = useNavigate(); 
@@ -21,15 +21,16 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: id, password: password }), // id를 email로 설정
+        body: JSON.stringify({ email: id, password: password }), // 이메일과 패스워드를 전송
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // 로그인 성공 시 토큰 저장
-        localStorage.setItem('token', data.token); // 백엔드에서 받은 토큰을 저장
-        navigate('/myfeed');
+        // 로그인 성공 시 토큰과 userId 저장
+        localStorage.setItem('token', data.token); // 백엔드에서 받은 JWT 토큰을 저장
+        localStorage.setItem('userId', data.userId); // 로그인된 사용자의 userId도 저장
+        navigate('/myfeed'); // MyFeed 페이지로 이동
       } else {
         setError('잘못된 아이디 또는 비밀번호입니다.');
       }
@@ -49,9 +50,9 @@ function App() {
               <div>
                 <input
                   type="text"
-                  placeholder="아이디"
+                  placeholder="이메일"
                   value={id}
-                  onChange={(e) => setId(e.target.value)}
+                  onChange={(e) => setId(e.target.value)} // 이메일 입력 필드로 변경
                   required
                 />
               </div>
@@ -77,7 +78,7 @@ function App() {
       <Route path="/myfeed" element={<MyFeed />} /> 
       <Route path="/main" element={<Main />} />
       <Route path="/detail" element={<Detail />} />
-      <Route path="/login" elemet={<App />} />
+      <Route path="/login" element={<App />} /> {/* 경로명 수정 */}
     </Routes>
   );
 }

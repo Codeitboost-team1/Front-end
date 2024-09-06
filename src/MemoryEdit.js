@@ -1,55 +1,67 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './MemoryEdit.css'; 
+import React, { useState, useEffect } from 'react';
+import './MemoryEdit.css';
 
-const MemoryEdit = ({ onAddNewFeedItem,onClose,onEdit }) => {
-    const navigate = useNavigate(); // Initialize useNavigate
-    const [fileName, setFileName] = useState('');  // 파일 이름 상태 관리
-    const [isPublic, setIsPublic] = useState(false);  // 공개 여부 상태 관리
-    const [tags, setTags] = useState([]);  // 태그 상태 관리
-    const [tagInput, setTagInput] = useState('');  // 태그 입력 상태 관리
+const MemoryEdit = ({ onClose, onEdit, initialData }) => {
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');  
+    const [isPublic, setIsPublic] = useState(false);  
+    const [tags, setTags] = useState([]);  
+    const [tagInput, setTagInput] = useState('');  
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState('');
     const [content, setContent] = useState('');
     const [date, setDate] = useState('');
 
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title || '');
+            setLocation(initialData.location || '');
+            setDate(initialData.date || '');
+            setTags(initialData.tags ? initialData.tags.split(', ') : []);
+            setIsPublic(initialData.isPublic || false);
+            setContent(initialData.content || '');
+            setFileName(initialData.fileName || '');
+            // 기존 파일을 미리보기로 설정하지 않음
+        }
+    }, [initialData]);
+
     const handleFileChange = (e) => {
-        setFileName(e.target.files[0].name);  // 파일 선택 시 파일 이름 상태 업데이트
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        setFileName(selectedFile.name);
     };
 
     const toggleVisibility = () => {
-        setIsPublic(!isPublic);  // 공개/비공개 상태 토글
+        setIsPublic(!isPublic);  
     };
 
     const addTag = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             if (tagInput.trim()) {
-                setTags([...tags, tagInput.trim()]);  // Enter 키 입력 시 태그 추가
+                setTags([...tags, tagInput.trim()]);  
                 setTagInput('');
             }
         }
     };
  
     const removeTag = (tagToRemove) => {
-        setTags(tags.filter(tag => tag !== tagToRemove));  // 태그 제거
+        setTags(tags.filter(tag => tag !== tagToRemove));  
     };
 
     const handleSubmit = () => {
         const updatedMemory = {
-            thumbnail: '/_.jpeg',
-            name: 'New User', // 실제 사용자 정보로 업데이트
-            id: 'new_user', // 실제 사용자 ID로 업데이트
             title,
             tags: tags.join(', '),
-            locationDate: `${location} | ${date}`,
-            likes: 0,
-            comments: 0,
+            location,
+            date,
+            content,
+            fileName,
             isPublic
         };
 
-        onEdit(updatedMemory);  // 수정된 데이터를 부모 컴포넌트에 전달
-        onClose();  // 모달 닫기
+        onEdit(updatedMemory);  
+        onClose();  
     };
 
     return (

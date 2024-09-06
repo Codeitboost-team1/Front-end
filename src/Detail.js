@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import './Detail.css';
 import MemoryDelete from './MemoryDelete';
 import Comment from './Comment';
-import MemoryEdit from './MemoryEdit';  // Import the MemoryEdit component
+import MemoryEdit from './MemoryEdit';  
 
 const Detail = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showCommentModal, setShowCommentModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);  // State for MemoryEdit modal
+    const [showEditModal, setShowEditModal] = useState(false);  
     const [isLiked, setIsLiked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [memoryData, setMemoryData] = useState({
@@ -17,15 +17,16 @@ const Detail = () => {
         date: '2024-09-01',
         tags: '#태그1',
         likes: 120,
-        comments: 2
+        comments: 2,
+        content: '본문 내용입니다.',
+        fileName: '이미지파일.jpg', 
+        filePreview: '/_.jpeg'  // 기존 파일 미리보기 URL
     });
     const [comments, setComments] = useState([
         { user: '사용자1', date: '24.09.01 21:50', text: '댓글1' },
         { user: '사용자2', date: '24.09.02 12:30', text: '댓글2' },
     ]);
 
-
-    // Handlers for MemoryDelete modal
     const handleDeleteClick = () => {
         setShowDeleteModal(true);
     };
@@ -39,7 +40,6 @@ const Detail = () => {
         setShowDeleteModal(false);
     };
 
-    // Handlers for Comment modal
     const handleCommentClick = () => {
         setShowCommentModal(true);
     };
@@ -53,9 +53,8 @@ const Detail = () => {
         setShowCommentModal(false);
     };
 
-    // Handlers for MemoryEdit modal
     const handleEditClick = () => {
-        setShowEditModal(true);  // Open the MemoryEdit modal
+        setShowEditModal(true);  
     };
 
     const handleCloseEditModal = () => {
@@ -63,16 +62,23 @@ const Detail = () => {
     };
 
     const handleEditMemory = (updatedMemory) => {
-        setMemoryData(updatedMemory);  // Update memory data
-        setShowEditModal(false);  // Close the MemoryEdit modal
+        setMemoryData(prevState => ({
+            ...prevState,
+            title: updatedMemory.title,
+            location: updatedMemory.location,
+            date: updatedMemory.date,
+            tags: updatedMemory.tags,
+            content: updatedMemory.content,
+            fileName: updatedMemory.fileName,
+            isPublic: updatedMemory.isPublic
+        }));
+        setShowEditModal(false);  
     };
 
-    // Like button handler
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
     };
 
-    // Pagination handler
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -112,7 +118,7 @@ const Detail = () => {
                                 <MemoryEdit 
                                     onClose={handleCloseEditModal} 
                                     onEdit={handleEditMemory} 
-                                    initialData={memoryData}  // Pass initial data to MemoryEdit
+                                    initialData={memoryData}  
                                 />
                             )}
                         </div>
@@ -126,13 +132,9 @@ const Detail = () => {
                 </header>
 
                 <section className="post-content">
-                    <img src="/_.jpeg" alt="Fishing" className="post-image" />
+                    <img src={memoryData.filePreview} alt="Content" className="post-image" />
                     <p>
-                        본문내용1<br />
-                        본문내용2<br /><br />
-                        본문내용3<br />
-                        본문내용4<br /><br />
-                        본문내용5
+                        {memoryData.content}
                     </p>
                 </section>
 

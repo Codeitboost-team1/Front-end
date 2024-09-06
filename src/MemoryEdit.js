@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './MemoryModal.css'; 
+import './MemoryEdit.css'; 
 
-const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
+const MemoryEdit = ({ onAddNewFeedItem,onClose,onEdit }) => {
     const navigate = useNavigate(); // Initialize useNavigate
     const [fileName, setFileName] = useState('');  // 파일 이름 상태 관리
     const [isPublic, setIsPublic] = useState(false);  // 공개 여부 상태 관리
@@ -36,20 +36,19 @@ const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
     };
 
     const handleSubmit = () => {
-        const newFeedItem = {
+        const updatedMemory = {
             thumbnail: '/_.jpeg',
-            name: 'New User', // Update with actual user info
-            id: 'new_user', // Update with actual user id
+            name: 'New User', // 실제 사용자 정보로 업데이트
+            id: 'new_user', // 실제 사용자 ID로 업데이트
             title,
             tags: tags.join(', '),
             locationDate: `${location} | ${date}`,
-            likes: 0,
-            comments: 0,
-            isPublic
+            content, // 본문 내용 추가
+            isPublic,
         };
 
-        onAddNewFeedItem(newFeedItem);  // Pass the new feed item to the parent
-        navigate('/myfeed'); // Navigate to MyFeed page
+        onEdit(updatedMemory);  // 수정된 메모리 데이터를 부모로 전달
+        onClose(); // 모달 닫기
     };
 
     return (
@@ -161,4 +160,4 @@ const MemoryModal = ({ onAddNewFeedItem,onClose }) => {
     );
 };
 
-export default MemoryModal;
+export default MemoryEdit;

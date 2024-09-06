@@ -84,32 +84,41 @@ function Feed() {
 
   const loadMoreFeeds = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/posts?offset=${feedCount}&limit=12`, {
+      const response = await fetch(`http://localhost:3001/api/posts?offset=${feedCount}&limit=12`, { // URL 수정
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // JWT 포함
+          'Authorization': `Bearer ${localStorage.getItem('token')}`  // Include JWT for private posts
         }
       });
-
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       const newPosts = await response.json();
-
-      const transformedNewPosts = newPosts.map(post => ({
-        id: post._id,
-        title: post.title,
-        tags: post.tags.join(', '),
-        locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
-        likes: post.likes,
-        comments: post.comments || 0,
-        isPublic: post.isPublic,
-        thumbnail: post.image_name || '/_.jpeg'
-      }));
-
-      setFeedData(prevFeedData => [...prevFeedData, ...transformedNewPosts]);
-      setFeedCount(prevCount => prevCount + 12);
+      console.log('New posts:', newPosts); // 응답 데이터 로그
+  
+      if (Array.isArray(newPosts)) {
+        const transformedNewPosts = newPosts.map(post => ({
+          id: post._id,
+          title: post.title,
+          tags: post.tags.join(', '),                                                                                            
+          locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
+          likes: post.likes,
+          comments: post.comments || 0,
+          isPublic: post.isPublic,
+          thumbnail: post.image_name || '/_.jpeg'  
+        }));
+  
+        setFeedData(prevFeedData => [...prevFeedData, ...transformedNewPosts]);
+        setFeedCount(prevCount => prevCount + 12);
+      } else {
+        console.error('Expected an array of posts, but got:', newPosts);
+      }
     } catch (error) {
       console.error('Error loading more posts:', error);
     }
   };
+  
 
   return (
     <div className="feed-page">

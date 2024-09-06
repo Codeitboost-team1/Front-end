@@ -119,33 +119,43 @@ function Feed() {
         }
     };
 
-      // 더보기 버튼을 클릭할 때 호출되는 함수
-const loadMoreFeeds = async () => {
-  try {
-    const response = await fetch(`/api/posts?offset=${feedCount}&limit=12`, { // 서버에서 페이지네이션을 적용해 추가 데이터를 요청
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`  // Include JWT for private posts
-      }
-    });
-    const newPosts = await response.json();
-
-    const transformedNewPosts = newPosts.map(post => ({
-      id          : post._id,
-      title       : post.title,
-      tags        : post.tags.join(', '),                                                                                             // 배열을 문자열로 변환
-      locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
-      likes: post.likes,
-      comments: post.comments || 0,
-      isPublic: post.isPublic,
-      thumbnail: post.image_name || '/_.jpeg'  // 기본 썸네일 이미지 사용
-    }));
-
-    setFeedData(prevFeedData => [...prevFeedData, ...transformedNewPosts]);
-    setFeedCount(prevCount => prevCount + 12);
-  } catch (error) {
-    console.error('Error loading more posts:', error);
-  }
-};
+    const loadMoreFeeds = async () => {
+        try {
+          const response = await fetch(`http://localhost:3001/api/posts?offset=${feedCount}&limit=12`, { // URL 수정
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`  // Include JWT for private posts
+            }
+          });
+      
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          const newPosts = await response.json();
+          console.log('New posts:', newPosts); // 응답 데이터 로그
+      
+          if (Array.isArray(newPosts)) {
+            const transformedNewPosts = newPosts.map(post => ({
+              id: post._id,
+              title: post.title,
+              tags: post.tags.join(', '),                                                                                            
+              locationDate: `${post.location || '위치 정보 없음'} | ${post.date ? new Date(post.date).toISOString().split('T')[0] : '날짜 정보 없음'}`,
+              likes: post.likes,
+              comments: post.comments || 0,
+              isPublic: post.isPublic,
+              thumbnail: post.image_name || '/_.jpeg'  
+            }));
+      
+            setFeedData(prevFeedData => [...prevFeedData, ...transformedNewPosts]);
+            setFeedCount(prevCount => prevCount + 12);
+          } else {
+            console.error('Expected an array of posts, but got:', newPosts);
+          }
+        } catch (error) {
+          console.error('Error loading more posts:', error);
+        }
+      };
+      
 
 
     const addNewFeedItem = (newFeedItem) => {
